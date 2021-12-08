@@ -2,7 +2,9 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+
 @app.route('/')
+@app.route('/index')
 def index():
     return render_template('index.html')
 
@@ -12,9 +14,9 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/product')
-def product():
-    return render_template('product.html')
+@app.route('/post')
+def post():
+    return render_template('post.html')
 
 
 @app.route('/contact')
