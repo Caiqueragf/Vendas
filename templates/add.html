@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{ url_for('static', filename='contact1-bg.jpg') }}' )">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1>Add Post</h1>
+                            <span class="subheading">You can create a blog post here!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div>
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- * * SB Forms Contact Form * *-->
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- This form is pre-integrated with SB Forms.-->
+                            <!-- To make this form functional, sign up at-->
+                            <!-- https://startbootstrap.com/solution/contact-forms-->
+                            <!-- to get an API token!-->
+                            <form id="addForm" name='addForm' method="POST" action="{{ url_for('addpost') }}" novalidate>
+                                <div class="form-floating">
+                                    <label for="name">Title</label>
+                                    <input class="form-control" id="title" name='title' type="text" placeholder="Enter your title..." >
+                                    
+                                </div>
+                                <div class="form-floating">
+                                    <label for="subtitle">Subtitle</label>
+                                    <input class="form-control" id="subtitle" name='subtitle' type="text" placeholder="Enter your subtitle..." d>
+                                    <div class="invalid-feedback" data-sb-feedback="subtitle:required">A subtitle is required.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <label for="author">Author</label>
+                                    <input class="form-control" id="author" name='author' type="text" placeholder="Enter the author..." >
+                                    <div class="invalid-feedback" data-sb-feedback="author:required">An author is required.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <label for="message">Blog Content</label>
+                                    <textarea class="form-control" id="content" name='content' placeholder="Enter your content here..." style="height: 12rem" required data-validantion-required-message='Please enter a content.'></textarea>
+                                    
+                                </div>
+                                <br />
+                                <div id="success"></div>
+                                <div class='form-group'>
+                                <button class="btn btn-secondary" id="sendMessageButton" type="submit">Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+{% endblock content %}
