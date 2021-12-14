@@ -60,12 +60,13 @@ def addpost():
     subtitle = request.form['subtitle']
     author = request.form['author']
     content = request.form['content']
-
+    #return '<h1>Title: {} Subtitle: {} Author: {} Content: {}</h1>'.format(title, subtitle, author, content)
     post = Blogpost(title=title, subtitle=subtitle, author=author, content=content, date_posted=datetime.now())
-    return redirect(url_for('index'))
-
+    
     db.session.add(post)
     db.session.commit()
+    
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
