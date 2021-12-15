@@ -3,8 +3,12 @@ from flask import Flask, render_template, url_for, request, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+from flask_wtf import form
+from forms import RegistrationForm, LoginForm
+
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'afe6de1d4025444d8585cc498a6a10d1'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -23,17 +27,26 @@ about_text = 'Testando'
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    posts = Blogpost.query.all()
+    return render_template('index.html', posts=posts)
 
 
 @app.route('/about')
 def about():
     return render_template('about.html')
 
+@app.route('/register')
+def register():
+    form = RegistrationForm()
+    return render_template('register.html', form=form)
 
-@app.route('/post')
-def post():
-    return render_template('post.html')
+
+
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    post = Blogpost.query.filter_by(id=post_id).one()
+    date_posted = post.date_posted.strftime('%B %d, %Y')
+    return render_template('post.html', post=post, date_posted=date_posted)
 
 
 @app.route('/contact')
@@ -43,12 +56,13 @@ def contact():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', form=form)
 
 
 @app.route('/account', methods=['GET', 'POST'])
 def account():
-    return render_template('account.html', text = about_text)
+    return render_template('account.html', text=about_text)
 
 @app.route('/add')
 def add():
