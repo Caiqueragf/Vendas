@@ -1,77 +1,73 @@
 {% extends "layout.html" %}
 {% block content %}
-        <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{{ url_for('static', filename='home-bg.jpg') }}')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>Clean Blog</h1>
-                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+            <!-- Page Header-->
+            <header class="masthead" style="background-image: url('{{ url_for('static', filename='login.jpg') }}' )">
+                <div class="container position-relative px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <div class="page-heading">
+                                <h1>Log In</h1>
+                                <span class="subheading">Login to your Account!</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </header>
-        <!-- Main Content-->
-        <main class="mb-4">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div>
-                            <!-- * * * * * * * * * * * * * * *-->
-                            <!-- * * SB Forms Contact Form * *-->
-                            <!-- * * * * * * * * * * * * * * *-->
-                            <!-- This form is pre-integrated with SB Forms.-->
-                            <!-- To make this form functional, sign up at-->
-                            <!-- https://startbootstrap.com/solution/contact-forms-->
-                            <!-- to get an API token!-->
-                            <form>
-                                <div class="form-floating">
-                                    <label for="name">Name</label>
-                                    <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                                </div>
-                                <div class="form-floating">
-                                    <label for="email">Email address</label>
-                                    <input class="form-control" id="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
-                                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                                </div>
-                                <div class="form-floating">
-                                    <label for="phone">Phone Number</label>
-                                    <input class="form-control" id="phone" type="tel" placeholder="Enter your phone number..." data-sb-validations="required" />
-                                    <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                                </div>
-                                <div class="form-floating">
-                                    <label for="message">Message</label>
-                                    <textarea class="form-control" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
-                                    <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                                </div>
-                                <br />
-                                <!-- Submit success message-->
-                                <!---->
-                                <!-- This is what your users will see when the form-->
-                                <!-- has successfully submitted-->
-                                <div class="d-none" id="submitSuccessMessage">
-                                    <div class="text-center mb-3">
-                                        <div class="fw-bolder">Form submission successful!</div>
-                                        To activate this form, sign up at
-                                        <br />
-                                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+            </header>
+            <!-- Main Content-->
+            <main class="mb-4">
+                <div class="container px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-5">
+                            <form method="POST" action="">
+                                {{ form.hidden_tag() }}
+                                <fieldset class="form-floating">
+                                    <legend class="border-bottom mb-4">Log In</legend>
+                                    <div class="form-floating mt-2">
+                                        {{ form.email.label(class="form-group-lg") }}
+                                        {% if form.email.errors %}
+                                            {{ form.email(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for errors in form.email.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.email(class="form-control") }}
+                                        {% endif %}
                                     </div>
+                                    <div class="form-floating mt-2">
+                                        {{ form.password.label(class="form-group-lg") }}
+                                        {% if form.password.errors %}
+                                            {{ form.password(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for errors in form.password.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.password(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-check mt-1 ml-4">
+                                        {{ form.remember(class='form-check-input mt-2') }}
+                                        {{ form.remember.label(class='form-check') }}
+                                    </div>
+                                </fieldset>
+                                <div class="btn text-uppercase">
+                                    {{ form.submit(class="btn btn-outline-info") }}
                                 </div>
-                                <!-- Submit error message-->
-                                <!---->
-                                <!-- This is what your users will see when there is-->
-                                <!-- an error submitting the form-->
-                                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                                <!-- Submit Button-->
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit">Send</button>
+                                <small class="text-muted ml-2">
+                                    <a href="#">Forgot password?</a>
+                                </small>
                             </form>
                         </div>
+                        
+                    </div>
+                    <div class="border-top pt-3 justify-content-center row">
+                        <small class="text-muted">
+                            Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
+                        </small>
                     </div>
                 </div>
-            </div>
-        </main>
-{% endblock content %}
+            </main>
+{% endblock %}
