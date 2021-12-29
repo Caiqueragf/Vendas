@@ -11,7 +11,7 @@
                             <span class="meta">
                                 Posted by
                                 {{ post.author }}
-                                <p><small class="mr-2">on {{ date_posted }}</small></p>
+                                <p><small class="mr-2">on {{ post.date_posted.strftime('%B %d, %Y') }}</small></p>
                             </span>
                         </div>
                     </div>

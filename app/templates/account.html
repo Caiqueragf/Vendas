@@ -1,7 +1,79 @@
 {% extends "layout.html" %}
 {% block content %}
-   <h1>About Page</h1>
-   <div>
-      {{ text }}
-   </div>
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url({{ url_for('static', filename='about-bg.jpg') }} );height: 100%;max-height: 350px;">
+         <div class="container position-relative px-4 px-lg-5">
+             <div class="row gx-4 gx-lg-5 justify-content-center">
+                 <div class="col-md-10 col-lg-8 col-xl-7">
+                     <div class="page-heading">
+                         <h1>Your Account</h1>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </header>
+     <!-- Main Content-->
+     <main class="mb-4">
+         <div class="container px-4 px-lg-5">
+             <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-5">
+                    <div class="media"> 
+                    <img class="rounded-circle account-img" src="{{ image_file }}">
+                        <div class="media-body">      
+                            <h2 class="account-heading">{{ current_user.username }}</h2>
+                            <p class="text-secondary">{{ current_user.email }}</p>
+                        </div>
+                    </div>   
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-floating">
+                            <legend class="border-bottom mb-2">Account Info</legend>
+                            <div class="form-group">
+                                {{ form.username.label(class="form-group-lg") }}
+                                {% if form.username.errors %}
+                                    {{ form.username(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for errors in form.username.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.username(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-floating mt-2">
+                                {{ form.email.label(class="form-group-lg") }}
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for errors in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-floating mt-4 mb-1">
+                                <small>
+                                {{ form.picture.label(class="form-group") }}
+                                {{ form.picture(class="form-control-file") }}
+                                {% if form.picture.errors %}
+                                    {% for error in form.picture.errors %}
+                                        <span class="text-danger">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                                </small>
+                            </div>
+                        </fieldset>
+                        <div class="form-floating mt-3">
+                            {{ form.submit(class="btn btn-outline-info") }}
+                        </div>
+                    </form>
+                </div>
+             </div>
+         </div>
+     </main>
+ </body>
+</html>
 {% endblock content %}

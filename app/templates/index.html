@@ -17,17 +17,17 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    {% for post in posts %}
+                    {% for blogpost in posts %}
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="{{ url_for('post', post_id=post.id) }}">
-                            <h2 class="post-title">{{ post.title }}</h2>
-                            <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+                        <a href="{{ url_for('post', post_id=blogpost.id) }}">
+                            <h2 class="post-title">{{ blogpost.title }}</h2>
+                            <h3 class="post-subtitle">{{ blogpost.subtitle }}</h3>
                         </a>
                         <p class="post-meta">
                             Posted by
-                            {{ post.author }}
-                            on {{ post.date_posted.strftime('%B %d, %Y') }}
+                            {{ blogpost.author }}
+                            on {{ blogpost.date_posted.strftime('%B %d, %Y') }}
                         </p>
                     </div>
                     {% endfor %}
