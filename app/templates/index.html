@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{{ url_for('static', filename='home-bg.jpg') }}')">
+        <header class="masthead" style="background-image: url('{{ url_for('static', filename='home-bg.jpg') }}');height: 100%;max-height: 350px;">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -26,7 +26,7 @@
                         </a>
                         <p class="post-meta">
                             Posted by
-                            {{ blogpost.author }}
+                            {{ blogpost.author.username }}
                             on {{ blogpost.date_posted.strftime('%B %d, %Y') }}
                         </p>
                     </div>
