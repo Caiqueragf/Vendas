@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url({{ url_for('static', filename='contact1-bg.jpg') }});height: 100%;max-height: 350px;">
+        <header class="masthead image-size" style="background-image: url({{ url_for('static', filename='contact1-bg.jpg') }})">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="page-heading">
-                            <h1>Add Post</h1>
-                            <span class="subheading">You can create a blog post here!</span>
+                            <h1>{{ legend }}</h1>
+                            <!-- <span class="subheading">You can create a blog post here!</span>-->
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                             <form method="POST" action="">
                                 {{ form.hidden_tag() }}
                                 <fieldset class="form-floating">
-                                    <legend class="border-bottom mb-4">New Post</legend>
+                                    <!--<legend class="border-bottom mb-4">{{ legend }}</legend>-->
                                     <div class="form-floating mt-2">
                                         {{ form.title.label(class="form-group-lg") }}
                                         {% if form.title.errors %}

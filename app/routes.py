@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, request, flash, redirect
+from flask import render_template, url_for, request, flash, redirect, abort
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, PostForm, UpdateAccountForm
 from app.models import User, Blogpost
@@ -62,12 +62,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/post/<int:post_id>')
-def post(post_id):
-    post = Blogpost.query.get_or_404(post_id)
-    return render_template('post.html', post=post)
-
-
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
@@ -109,10 +103,11 @@ def account():
     return render_template('account.html', image_file=image_file, form=form)
 
 
-#@app.route('/add')
-#@login_required
-#def add():
-#    return render_template('add.html')
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    post = Blogpost.query.get_or_404(post_id)
+    return render_template('post.html', post=post)
+
 
 @app.route('/addpost', methods=['GET', 'POST'])
 @login_required
@@ -125,21 +120,37 @@ def addpost():
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('index'))
-    return render_template('add.html', form=form)
+    return render_template('add.html', form=form, legend='New Post')
 
 
-#@app.route('/addpost', methods=['POST'])
-#@login_required
-#def addpost():
-#    title = request.form['title']
-#    subtitle = request.form['subtitle']
-#    author = request.form['author']
-#    content = request.form['content']
-    #return '<h1>Title: {} Subtitle: {} Author: {} Content: {}</h1>'.format(title, subtitle, author, content)
-#    post = Blogpost(title=title, subtitle=subtitle, author=author,
-#                    content=content, date_posted=datetime.now())
-#
-#    db.session.add(post)
- #   db.session.commit()
+@app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post = Blogpost.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.subtitle = form.subtitle.data
+        post.content = form.content.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('post', post_id=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.subtitle.data = post.subtitle
+        form.content.data = post.content
+    return render_template('add.html', form=form, legend='Update Post')
 
- #   return redirect(url_for('index'))
+
+@app.route('/post/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Blogpost.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('index'))
